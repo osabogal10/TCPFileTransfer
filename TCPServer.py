@@ -13,14 +13,14 @@ class transfer :
         self.mysocket.bind((host, port))
         print(' Server is ready ..')
         self.mysocket.listen(5)
-        conn, addr = self.mysocket.accept()
+        while True:
+            conn, addr = self.mysocket.accept()
 
-        file_name = '4k.jpg'
-        size = os.path.getsize(file_name)
-        print(' file size : {}'.format(str(size)))
-
-        send_thread = threading.Thread(target = self.send_file, args=(file_name, size, conn, addr, ))
-        send_thread.start()
+            file_name = '4k.jpg'
+            size = os.path.getsize(file_name)
+            print(' file size : {}'.format(str(size)))
+            send_thread = threading.Thread(target = self.send_file, args=(file_name, size, conn, addr, ))
+            send_thread.start()
 
     def send_file(self, file_name, size, conn, addr):
         with open(file_name, 'rb') as file:
