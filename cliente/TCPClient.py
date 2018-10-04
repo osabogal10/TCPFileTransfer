@@ -17,7 +17,7 @@ l.addHandler(sh)
 l.setLevel(DEBUG)
 
 
-host, port = '127.0.0.1', 9000
+host, port = '157.253.205.7', 9000
 hasher = hashlib.md5()
 SIZE=2048
 
