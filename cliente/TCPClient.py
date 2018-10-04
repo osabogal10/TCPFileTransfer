@@ -22,7 +22,7 @@ hasher = hashlib.md5()
 SIZE=2048
 
 showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-l.info('%s;%s','DATE',showtime)
+#l.info('%s;%s','DATE',showtime)
 
 
 class recv_data :
@@ -55,9 +55,9 @@ class recv_data :
         hash_cliente = hasher.hexdigest()
         print('hash cliente: ', hash_cliente)
 
-        l.info('%s;%s', 'FILE_NAME', filename.decode('utf-8'))
-        l.info('%s;%s', 'FILE_SIZE', filesize.decode('utf-8'))
-        l.info('%s;%s', 'CLIENT', idCliente.decode('utf-8'))
+        #l.info('%s;%s', 'FILE_NAME', filename.decode('utf-8'))
+        #l.info('%s;%s', 'FILE_SIZE', filesize.decode('utf-8'))
+        #l.info('%s;%s', 'CLIENT', idCliente.decode('utf-8'))
 
         bytesSent = self.mysocket.recv(64)
         numPack = self.mysocket.recv(64)
@@ -66,10 +66,12 @@ class recv_data :
         hash_servidor = hash_servidor.decode('utf-8')
         print('hash servidor: ', hash_servidor)
         if hash_servidor == hash_cliente:
-            l.info('FILE_DELIVERY;SUCCESS')
+            #l.info('FILE_DELIVERY;SUCCESS')
+            print('exito')
 
         else:
-            l.info('FILE_DELIVERY;FAILURE')
+            #l.info('FILE_DELIVERY;FAILURE')
+            print('yo como ing de sistemas')
 
         l.info('%s;%s', 'BYTES_SENT', bytesSent.decode('utf-8'))
         l.info('%s;%s', 'BYTES_RECEIVED', str(bytesReceived-3))
