@@ -48,7 +48,7 @@ class recv_data :
             bytesReceived=bytesReceived+len(data);
             i=i+1
             if data == b'Fin' :
-                print('Fin de archivo')
+                print('Fin de archivo',data)
 
                 elapsed_time = time.time() - start_time
                 sleep(2)
