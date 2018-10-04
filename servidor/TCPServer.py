@@ -3,7 +3,7 @@ from time import sleep
 
 
 host, port = '', 9000
-SIZE = 8192
+SIZE = 2048
 hasher = hashlib.md5()
 
 
@@ -59,6 +59,7 @@ class transfer :
                     sent = conn.send(b'Fin')
                     print('Fin')
                     break
+            sleep(0.5)
             conn.send(str(bytesSent).encode('utf-8'))
             print(str(bytesSent).encode('utf-8'))
             #sleep(0.5)

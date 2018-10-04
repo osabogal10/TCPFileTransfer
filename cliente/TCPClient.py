@@ -17,9 +17,9 @@ l.addHandler(sh)
 l.setLevel(DEBUG)
 
 
-host, port = '157.253.205.7', 9000
+host, port = '127.0.0.1', 9000
 hasher = hashlib.md5()
-SIZE=8192
+SIZE=2048
 
 showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 l.info('%s;%s','DATE',showtime)
@@ -59,10 +59,10 @@ class recv_data :
         l.info('%s;%s', 'FILE_SIZE', filesize.decode('utf-8'))
         l.info('%s;%s', 'CLIENT', idCliente.decode('utf-8'))
 
-        bytesSent = self.mysocket.recv(SIZE)
-        numPack = self.mysocket.recv(SIZE)
+        bytesSent = self.mysocket.recv(64)
+        numPack = self.mysocket.recv(64)
 
-        hash_servidor = self.mysocket.recv(SIZE)
+        hash_servidor = self.mysocket.recv(64)
         hash_servidor = hash_servidor.decode('utf-8')
         print('hash servidor: ', hash_servidor)
         if hash_servidor == hash_cliente:
