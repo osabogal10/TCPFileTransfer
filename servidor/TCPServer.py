@@ -35,13 +35,13 @@ class transfer :
 
     def send_file(self, file_name, size, conn, addr, id_cliente):
         size = os.path.getsize(file_name)
-        conn.send(file_name.encode('utf-8'))
+        conn.send(file_name.encode('utf-8').zfill(32))
         print(file_name.encode('utf-8'))
         #sleep(0.5)
-        conn.send(str(size).encode('utf-8'))
+        conn.send(str(size).encode('utf-8').zfill(32))
         print(str(size).encode('utf-8'))
         #sleep(0.5)
-        conn.send(str(id_cliente).encode('utf-8'))
+        conn.send(str(id_cliente).encode('utf-8').zfill(32))
         print(str(id_cliente).encode('utf-8'))
         i = 0
         bytesSent = 0

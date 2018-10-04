@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="992545dd-d02a-42d0-ae3c-cf3b91d0e41d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/cliente/TCPClient.py" beforeDir="false" afterPath="$PROJECT_DIR$/cliente/TCPClient.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/servidor/TCPServer.py" beforeDir="false" afterPath="$PROJECT_DIR$/servidor/TCPServer.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,12 +62,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="577" />
+          <entry key="py" value="599" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="577" />
+          <entry key="Python" value="599" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -88,8 +89,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/servidor/TCPServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="765">
-              <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+            <state relative-caret-position="391">
+              <caret line="43" column="59" selection-start-line="43" selection-start-column="59" selection-end-line="43" selection-end-column="59" />
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -100,8 +101,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cliente/TCPClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="82">
-              <caret line="42" column="41" selection-start-line="42" selection-start-column="41" selection-end-line="42" selection-end-column="41" />
+            <state relative-caret-position="235">
+              <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
               </folding>
@@ -404,8 +405,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/servidor/TCPServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+        <state relative-caret-position="391">
+          <caret line="43" column="59" selection-start-line="43" selection-start-column="59" selection-end-line="43" selection-end-column="59" />
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>
@@ -414,8 +415,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cliente/TCPClient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="82">
-          <caret line="42" column="41" selection-start-line="42" selection-start-column="41" selection-end-line="42" selection-end-column="41" />
+        <state relative-caret-position="235">
+          <caret line="36" column="41" selection-start-line="36" selection-start-column="41" selection-end-line="36" selection-end-column="41" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>

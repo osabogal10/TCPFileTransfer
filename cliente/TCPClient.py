@@ -32,9 +32,9 @@ class recv_data :
     def __init__(self):
         print('Connected successfully')
 
-        filename = self.mysocket.recv(SIZE)
-        filesize = self.mysocket.recv(SIZE)
-        idCliente = self.mysocket.recv(SIZE)
+        filename = self.mysocket.recv(32).lstrip('0')
+        filesize = self.mysocket.recv(32).lstrip('0')
+        idCliente = self.mysocket.recv(32).lstrip('0')
         start_time = time.time()
         data = self.mysocket.recv(SIZE)
         i=0
