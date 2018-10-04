@@ -59,7 +59,7 @@ class transfer :
                     sent = conn.send(b'Fin')
                     print('Fin')
                     break
-            sleep(0.5)
+            sleep(2)
             conn.send(str(bytesSent).encode('utf-8'))
             print(str(bytesSent).encode('utf-8'))
             #sleep(0.5)
