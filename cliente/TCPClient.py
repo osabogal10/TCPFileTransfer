@@ -19,7 +19,7 @@ l.setLevel(DEBUG)
 
 host, port = '157.253.205.7', 9000
 hasher = hashlib.md5()
-SIZE=32000
+SIZE=8192
 
 showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 l.info('%s;%s','DATE',showtime)
@@ -54,8 +54,6 @@ class recv_data :
         hasher.update(buf)
         hash_cliente = hasher.hexdigest()
         print('hash cliente: ', hash_cliente)
-
-        print('hash: ', hasher.hexdigest())
 
         l.info('%s;%s', 'FILE_NAME', filename.decode('utf-8'))
         l.info('%s;%s', 'FILE_SIZE', filesize.decode('utf-8'))
