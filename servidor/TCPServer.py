@@ -67,6 +67,7 @@ class transfer :
                     fin = b''.zfill(32)
                     sent = conn.send(fin)
                     print(fin)
+                    sleep(5)
                     conn.send(str(bytesSent).encode('utf-8').zfill(32))
                     print(str(bytesSent).encode('utf-8').zfill(32))
                     # sleep(0.5)
