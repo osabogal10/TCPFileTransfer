@@ -1,8 +1,9 @@
-import socket, sys, threading
+import socket, sys, threading, hashlib
 
 from time import sleep
 
 host, port = '127.0.0.1', 9000
+hasher = hashlib.md5()
 
 
 class recv_data :
@@ -12,11 +13,15 @@ class recv_data :
     print('conectado (?')
     def __init__(self):
         data = self.mysocket.recv(1024)
-        f = open('newfile.jpg', 'wb')
+        f = open('newfile.jpg', 'wb+')
         while data != bytes(''.encode()):
             #print(data)
             f.write(data)
             data = self.mysocket.recv(1024)
+        buf = f.read()
+        hasher.update(buf)
+        print('hash: ', hasher.hexdigest())
+
 
 
 re = recv_data()
