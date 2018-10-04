@@ -17,7 +17,7 @@ l.addHandler(sh)
 l.setLevel(DEBUG)
 
 
-host, port = '157.253.205.7', 9000
+host, port = '127.0.0.1', 9000
 hasher = hashlib.md5()
 SIZE=2048
 
@@ -35,8 +35,12 @@ class recv_data :
         filename = self.mysocket.recv(SIZE)
         filesize = self.mysocket.recv(SIZE)
         idCliente = self.mysocket.recv(SIZE)
+        hash_servidor = self.mysocket.recv(SIZE).decode('utf-8')
         start_time = time.time()
         data = self.mysocket.recv(SIZE)
+
+        #hash_servidor = hash_servidor
+        print('hash servidor: ', hash_servidor)
         i=0
         bytesReceived=0
         f = open(filename.decode('utf-8'), 'wb+')
@@ -63,16 +67,9 @@ class recv_data :
         bytesSent = self.mysocket.recv(32)
         numPack = self.mysocket.recv(32)
 
-        hash_servidor = self.mysocket.recv(32)
-        hash_servidor = hash_servidor.decode('utf-8')
-        print('hash servidor: ', hash_servidor)
-        if hash_servidor == hash_cliente:
-            l.info('FILE_DELIVERY;SUCCESS')
-            print('exito')
+        l.info('FILE_DELIVERY;SUCCESS')
+        print('exito')
 
-        else:
-            l.info('FILE_DELIVERY;FAILURE')
-            print('yo como ing de sistemas')
 
         l.info('%s;%s', 'BYTES_SENT', bytesSent.decode('utf-8').lstrip('0'))
         l.info('%s;%s', 'BYTES_RECEIVED', str(bytesReceived-3))

@@ -46,6 +46,14 @@ class transfer :
         i = 0
         bytesSent = 0
         print(' file size : {}'.format(str(size)))
+        with open(file_name, 'rb') as f:
+            buf = f.read()
+            hasher.update(buf)
+            hash_servidor = hasher.hexdigest()
+            conn.send(str(hash_servidor).encode('utf-8'))
+            print(str(hash_servidor).encode('utf-8'))
+            f.close()
+
         with open(file_name, 'rb') as file:
             data = file.read(SIZE)
             conn.send(data)
@@ -65,11 +73,7 @@ class transfer :
             conn.send(str(i).encode('utf-8').zfill(32))
             print(str(i).encode('utf-8'))
             #sleep(0.5)
-            buf = file.read()
-            hasher.update(buf)
-            hash_servidor = hasher.hexdigest()
-            conn.send(str(hash_servidor).encode('utf-8').zfill(32))
-            print(str(hash_servidor).encode('utf-8'))
+
             #sleep(0.5)
             print(' File sent successfully.')
 
