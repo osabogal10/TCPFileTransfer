@@ -58,20 +58,21 @@ class transfer :
                 if sent < SIZE:
                     sent = conn.send(b'Fin')
                     print('Fin')
+                    conn.send(str(bytesSent).encode('utf-8').zfill(32))
+                    print(str(bytesSent).encode('utf-8'))
+                    # sleep(0.5)
+                    conn.send(str(i).encode('utf-8').zfill(32))
+                    print(str(i).encode('utf-8'))
+                    # sleep(0.5)
+                    buf = file.read()
+                    hasher.update(buf)
+                    hash_servidor = hasher.hexdigest()
+                    conn.send(str(hash_servidor).encode('utf-8').zfill(32))
+                    print(str(hash_servidor).encode('utf-8'))
+                    # sleep(0.5)
+                    print(' File sent successfully.')
                     break
-            conn.send(str(bytesSent).encode('utf-8').zfill(32))
-            print(str(bytesSent).encode('utf-8'))
-            #sleep(0.5)
-            conn.send(str(i).encode('utf-8').zfill(32))
-            print(str(i).encode('utf-8'))
-            #sleep(0.5)
-            buf = file.read()
-            hasher.update(buf)
-            hash_servidor = hasher.hexdigest()
-            conn.send(str(hash_servidor).encode('utf-8').zfill(32))
-            print(str(hash_servidor).encode('utf-8'))
-            #sleep(0.5)
-            print(' File sent successfully.')
+
 
 
 

@@ -17,7 +17,7 @@ l.addHandler(sh)
 l.setLevel(DEBUG)
 
 
-host, port = '157.253.205.7', 9000
+host, port = '127.0.0.1', 9000
 hasher = hashlib.md5()
 SIZE=2048
 
@@ -49,45 +49,50 @@ class recv_data :
             i=i+1
             if data == b'Fin' :
                 print('Fin de archivo')
+
+                elapsed_time = time.time() - start_time
+                sleep(2)
+                buf = f.read()
+                hasher.update(buf)
+                hash_cliente = hasher.hexdigest()
+                print('hash cliente: ', hash_cliente)
+
+                l.info('%s;%s', 'FILE_NAME', filename)
+                l.info('%s;%s', 'FILE_SIZE', filesize)
+                l.info('%s;%s', 'CLIENT', idCliente)
+
+                bytesSent = self.mysocket.recv(32)
+                numPack = self.mysocket.recv(32)
+
+                hash_servidor = self.mysocket.recv(32)
+                hash_servidor = hash_servidor.decode('utf-8')
+                print('hash servidor: ', hash_servidor)
+                if hash_servidor == hash_cliente:
+                    l.info('FILE_DELIVERY;SUCCESS')
+                    print('exito')
+
+                else:
+                    l.info('FILE_DELIVERY;FAILURE')
+                    print('yo como ing de sistemas')
+
+                l.info('%s;%s', 'BYTES_SENT', bytesSent.decode('utf-8').lstrip('0'))
+                l.info('%s;%s', 'BYTES_RECEIVED', str(bytesReceived - 3))
+
+                # showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+                print('TIME ELAPSED: ', elapsed_time)
+                l.info('%s;%s', 'PACKETS SENT', numPack.decode('utf-8').lstrip('0'))
+                l.info('%s;%s', 'PACKETS RECEIVED', i)
+
+                l.info('%s;%s', 'ELAPSED_TIME', elapsed_time)
+                l.info('------------------------------')
+                logging.shutdown()
+                os.rename('./logs/TCP.log', './logs/TCP{}.log'.format(idCliente))
+
+
+
+
                 break
-        elapsed_time = time.time() - start_time
-        sleep(2)
-        buf = f.read()
-        hasher.update(buf)
-        hash_cliente = hasher.hexdigest()
-        print('hash cliente: ', hash_cliente)
 
-        l.info('%s;%s', 'FILE_NAME', filename)
-        l.info('%s;%s', 'FILE_SIZE', filesize)
-        l.info('%s;%s', 'CLIENT', idCliente)
-
-        bytesSent = self.mysocket.recv(32)
-        numPack = self.mysocket.recv(32)
-
-        hash_servidor = self.mysocket.recv(32)
-        hash_servidor = hash_servidor.decode('utf-8')
-        print('hash servidor: ', hash_servidor)
-        if hash_servidor == hash_cliente:
-            l.info('FILE_DELIVERY;SUCCESS')
-            print('exito')
-
-        else:
-            l.info('FILE_DELIVERY;FAILURE')
-            print('yo como ing de sistemas')
-
-        l.info('%s;%s', 'BYTES_SENT', bytesSent.decode('utf-8').lstrip('0'))
-        l.info('%s;%s', 'BYTES_RECEIVED', str(bytesReceived-3))
-
-
-        #showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-        print('TIME ELAPSED: ', elapsed_time)
-        l.info('%s;%s', 'PACKETS SENT', numPack.decode('utf-8').lstrip('0'))
-        l.info('%s;%s', 'PACKETS RECEIVED', i)
-
-        l.info('%s;%s', 'ELAPSED_TIME', elapsed_time)
-        l.info('------------------------------')
-        logging.shutdown()
-        os.rename('./logs/TCP.log', './logs/TCP{}.log'.format(idCliente))
 
 
 
