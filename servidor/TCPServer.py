@@ -37,8 +37,10 @@ class transfer :
         size = os.path.getsize(file_name)
         conn.send(file_name.encode('utf-8'))
         print(file_name.encode('utf-8'))
+        sleep(0.5)
         conn.send(str(size).encode('utf-8'))
         print(str(size).encode('utf-8'))
+        sleep(0.5)
         conn.send(str(id_cliente).encode('utf-8'))
         print(str(id_cliente).encode('utf-8'))
         i = 0
@@ -62,11 +64,13 @@ class transfer :
             sleep(0.5)
             conn.send(str(i).encode('utf-8'))
             print(str(i).encode('utf-8'))
+            sleep(0.5)
             buf = file.read()
             hasher.update(buf)
             hash_servidor = hasher.hexdigest()
             conn.send(str(hash_servidor).encode('utf-8'))
             print(str(hash_servidor).encode('utf-8'))
+            sleep(0.5)
             print(' File sent successfully.')
 
 
