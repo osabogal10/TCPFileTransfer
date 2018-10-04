@@ -42,7 +42,7 @@ class recv_data :
         bytesReceived=0
         f = open(filename, 'wb+')
         while data != bytes(''.encode()):
-            #print(data)
+            print(data)
             f.write(data)
             data = self.mysocket.recv(SIZE)
             bytesReceived=bytesReceived+len(data);
