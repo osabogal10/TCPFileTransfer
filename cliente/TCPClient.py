@@ -17,7 +17,7 @@ l.addHandler(sh)
 l.setLevel(DEBUG)
 
 
-host, port = '157.253.205.7', 9000
+host, port = '127.0.0.1', 9000
 hasher = hashlib.md5()
 SIZE=2048
 
@@ -32,14 +32,15 @@ class recv_data :
     def __init__(self):
         print('Connected successfully')
 
-        filename = self.mysocket.recv(32).lstrip('0')
-        filesize = self.mysocket.recv(32).lstrip('0')
-        idCliente = self.mysocket.recv(32).lstrip('0')
+        filename = self.mysocket.recv(32)
+        filename = filename.decode('utf-8').lstrip('0')
+        filesize = self.mysocket.recv(32).decode('utf-8').lstrip('0')
+        idCliente = self.mysocket.recv(32).decode('utf-8').lstrip('0')
         start_time = time.time()
         data = self.mysocket.recv(SIZE)
         i=0
         bytesReceived=0
-        f = open(filename.decode('utf-8'), 'wb+')
+        f = open(filename, 'wb+')
         while data != bytes(''.encode()):
             #print(data)
             f.write(data)
@@ -56,9 +57,9 @@ class recv_data :
         hash_cliente = hasher.hexdigest()
         print('hash cliente: ', hash_cliente)
 
-        l.info('%s;%s', 'FILE_NAME', filename.decode('utf-8'))
-        l.info('%s;%s', 'FILE_SIZE', filesize.decode('utf-8'))
-        l.info('%s;%s', 'CLIENT', idCliente.decode('utf-8'))
+        l.info('%s;%s', 'FILE_NAME', filename)
+        l.info('%s;%s', 'FILE_SIZE', filesize)
+        l.info('%s;%s', 'CLIENT', idCliente)
 
         bytesSent = self.mysocket.recv(32)
         numPack = self.mysocket.recv(32)
@@ -86,7 +87,7 @@ class recv_data :
         l.info('%s;%s', 'ELAPSED_TIME', elapsed_time)
         l.info('------------------------------')
         logging.shutdown()
-        os.rename('./logs/TCP.log', './logs/TCP{}.log'.format(idCliente.decode('utf-8')))
+        os.rename('./logs/TCP.log', './logs/TCP{}.log'.format(idCliente))
 
 
 
