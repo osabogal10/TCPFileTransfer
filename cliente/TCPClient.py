@@ -31,10 +31,11 @@ class recv_data :
     mysocket.connect((host, port))
     def __init__(self):
         print('Connected successfully')
-        start_time = time.time()
+
         filename = self.mysocket.recv(SIZE)
         filesize = self.mysocket.recv(SIZE)
         idCliente = self.mysocket.recv(SIZE)
+        start_time = time.time()
         data = self.mysocket.recv(SIZE)
         i=0
         bytesReceived=0
@@ -48,6 +49,7 @@ class recv_data :
             if data == b'Fin' :
 
                 break
+        elapsed_time = time.time() - start_time
         buf = f.read()
         hasher.update(buf)
         hash_cliente = hasher.hexdigest()
@@ -74,7 +76,7 @@ class recv_data :
         l.info('%s;%s', 'BYTES_SENT', bytesSent.decode('utf-8'))
         l.info('%s;%s', 'BYTES_RECEIVED', str(bytesReceived-3))
 
-        elapsed_time = time.time() - start_time
+
         showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         print('TIME ELAPSED: ', elapsed_time)
         l.info('%s;%s', 'PACKETS SENT', numPack.decode('utf-8'))
