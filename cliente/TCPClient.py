@@ -44,14 +44,13 @@ class recv_data :
         while data != bytes(''.encode()):
             print(data)
             f.write(data)
-            data = self.mysocket.recv(SIZE)
+            data = self.mysocket.recv(SIZE).lstrip('0')
             bytesReceived=bytesReceived+len(data);
             i=i+1
-            if data == b''.zfill(SIZE) :
+            if data == b''.zfill(32) :
                 print('Fin de archivo',data)
 
                 elapsed_time = time.time() - start_time
-                sleep(2)
                 buf = f.read()
                 hasher.update(buf)
                 hash_cliente = hasher.hexdigest()

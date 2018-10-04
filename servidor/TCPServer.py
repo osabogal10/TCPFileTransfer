@@ -49,14 +49,22 @@ class transfer :
         with open(file_name, 'rb') as file:
             data = file.read(SIZE)
             conn.send(data)
+            ultimo = False
             while data != bytes(''.encode()):
                 #print(data)
-                data = file.read(SIZE)
-                sent = conn.send(data)
+                if len(data) ==SIZE and len(data)!=0:
+                    data = file.read(SIZE)
+                    sent = conn.send(data)
+                else:
+                    data = file.read(SIZE).zfill(SIZE)
+                    print('relleno el ultimo')
+                    sent = conn.send(data)
+                    ultimo = True
+
                 i = i+1
                 bytesSent = bytesSent+sent
-                if sent < SIZE:
-                    fin = b''.zfill(SIZE)
+                if ultimo:
+                    fin = b''.zfill(32)
                     sent = conn.send(fin)
                     print(fin)
                     conn.send(str(bytesSent).encode('utf-8').zfill(32))
