@@ -42,12 +42,12 @@ class recv_data :
         bytesReceived=0
         f = open(filename, 'wb+')
         while data != bytes(''.encode()):
-            #print(data)
+            print(data)
             f.write(data)
             data = self.mysocket.recv(SIZE)
             bytesReceived=bytesReceived+len(data);
             i=i+1
-            if data == b''.zfill(32) :
+            if data == b'Final'.zfill(SIZE) :
                 print('Fin de archivo',data)
 
                 elapsed_time = time.time() - start_time

@@ -52,6 +52,7 @@ class transfer :
             ultimo = False
             while data != bytes(''.encode()):
                 #print(data)
+                #
                 if len(data) ==SIZE and len(data)!=0:
                     data = file.read(SIZE)
                     sent = conn.send(data)
@@ -64,7 +65,7 @@ class transfer :
                 i = i+1
                 bytesSent = bytesSent+sent
                 if ultimo:
-                    fin = b''.zfill(32)
+                    fin = b'Final'.zfill(SIZE)
                     sent = conn.send(fin)
                     print(fin)
                     sleep(5)
