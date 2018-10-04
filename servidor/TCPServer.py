@@ -35,13 +35,13 @@ class transfer :
 
     def send_file(self, file_name, size, conn, addr, id_cliente):
         size = os.path.getsize(file_name)
-        conn.send(file_name.encode('utf-8').zfill(32))
+        conn.send(file_name.encode('utf-8'))
         print(file_name.encode('utf-8'))
         #sleep(0.5)
-        conn.send(str(size).encode('utf-8').zfill(32))
+        conn.send(str(size).encode('utf-8'))
         print(str(size).encode('utf-8'))
         #sleep(0.5)
-        conn.send(str(id_cliente).encode('utf-8').zfill(32))
+        conn.send(str(id_cliente).encode('utf-8'))
         print(str(id_cliente).encode('utf-8'))
         i = 0
         bytesSent = 0
@@ -49,41 +49,29 @@ class transfer :
         with open(file_name, 'rb') as file:
             data = file.read(SIZE)
             conn.send(data)
-            ultimo = False
             while data != bytes(''.encode()):
                 #print(data)
-                #
-                if len(data) ==SIZE and len(data)!=0:
-                    data = file.read(SIZE)
-                    sent = conn.send(data)
-                else:
-                    data = file.read(SIZE).zfill(SIZE)
-                    print('relleno el ultimo')
-                    sent = conn.send(data)
-                    ultimo = True
-
+                data = file.read(SIZE)
+                sent = conn.send(data)
                 i = i+1
                 bytesSent = bytesSent+sent
-                if ultimo:
-                    fin = b'Final'.zfill(SIZE)
-                    sent = conn.send(fin)
-                    print(fin)
-                    sleep(5)
-                    conn.send(str(bytesSent).encode('utf-8').zfill(32))
-                    print(str(bytesSent).encode('utf-8').zfill(32))
-                    # sleep(0.5)
-                    conn.send(str(i).encode('utf-8').zfill(32))
-                    print(str(i).encode('utf-8').zfill(32))
-                    # sleep(0.5)
-                    buf = file.read()
-                    hasher.update(buf)
-                    hash_servidor = hasher.hexdigest()
-                    conn.send(str(hash_servidor).encode('utf-8').zfill(32))
-                    print(str(hash_servidor).encode('utf-8').zfill(32))
-                    # sleep(0.5)
-                    print(' File sent successfully.')
+                if sent < SIZE:
+                    sent = conn.send(b'Fin')
+                    print('Fin')
                     break
-
+            conn.send(str(bytesSent).encode('utf-8').zfill(32))
+            print(str(bytesSent).encode('utf-8'))
+            #sleep(0.5)
+            conn.send(str(i).encode('utf-8').zfill(32))
+            print(str(i).encode('utf-8'))
+            #sleep(0.5)
+            buf = file.read()
+            hasher.update(buf)
+            hash_servidor = hasher.hexdigest()
+            conn.send(str(hash_servidor).encode('utf-8').zfill(32))
+            print(str(hash_servidor).encode('utf-8'))
+            #sleep(0.5)
+            print(' File sent successfully.')
 
 
 
