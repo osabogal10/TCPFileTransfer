@@ -44,7 +44,7 @@ class recv_data :
         while data != bytes(''.encode()):
             print(data)
             f.write(data)
-            data = self.mysocket.recv(SIZE).lstrip('0')
+            data = self.mysocket.recv(SIZE)
             bytesReceived=bytesReceived+len(data);
             i=i+1
             if data == b''.zfill(32) :
