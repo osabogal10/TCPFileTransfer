@@ -18,6 +18,7 @@ l.setLevel(DEBUG)
 
 
 host, port = '157.253.205.7', 9000
+#host, port = '127.0.0.1', 9000
 hasher = hashlib.md5()
 SIZE=2048
 
@@ -35,12 +36,15 @@ class recv_data :
         filename = self.mysocket.recv(SIZE)
         filesize = self.mysocket.recv(SIZE)
         idCliente = self.mysocket.recv(SIZE)
-        hash_servidor = self.mysocket.recv(SIZE).decode('utf-8')
+        hashito = bytearray(SIZE)
+        hash_servidor = self.mysocket.recv_into(hashito,SIZE)
+        print(hashito.decode('utf-8'))
+        #hash_servidor = self.mysocket.recv(SIZE).decode('utf-8')
         start_time = time.time()
         data = self.mysocket.recv(SIZE)
 
         #hash_servidor = hash_servidor
-        print('hash servidor: ', hash_servidor)
+        print('hash servidor: ', hashito.decode('utf-8'))
         i=0
         bytesReceived=0
         f = open(filename.decode('utf-8'), 'wb+')
