@@ -40,7 +40,7 @@ class recv_data :
         i=0
         bytesReceived=0
         f = open(filename.decode('utf-8'), 'wb+')
-        while True:
+        while data != bytes(''.encode()):
             #print(data)
             f.write(data)
             data = self.mysocket.recv(SIZE)
