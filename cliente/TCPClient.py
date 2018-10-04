@@ -53,10 +53,9 @@ class recv_data :
         buf = f.read()
         hasher.update(buf)
         hash_cliente = hasher.hexdigest()
+        print('hash cliente: ', hash_cliente)
 
         print('hash: ', hasher.hexdigest())
-
-
 
         l.info('%s;%s', 'FILE_NAME', filename.decode('utf-8'))
         l.info('%s;%s', 'FILE_SIZE', filesize.decode('utf-8'))
@@ -67,6 +66,7 @@ class recv_data :
 
         hash_servidor = self.mysocket.recv(SIZE)
         hash_servidor = hash_servidor.decode('utf-8')
+        print('hash servidor: ', hash_servidor)
         if hash_servidor == hash_cliente:
             l.info('FILE_DELIVERY;SUCCESS')
 
