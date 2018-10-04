@@ -56,8 +56,9 @@ class transfer :
                 i = i+1
                 bytesSent = bytesSent+sent
                 if sent < SIZE:
-                    sent = conn.send(b'Fin')
-                    print('Fin')
+                    fin = b''.zfill(SIZE)
+                    sent = conn.send(fin)
+                    print(fin)
                     conn.send(str(bytesSent).encode('utf-8').zfill(32))
                     print(str(bytesSent).encode('utf-8').zfill(32))
                     # sleep(0.5)

@@ -47,7 +47,7 @@ class recv_data :
             data = self.mysocket.recv(SIZE)
             bytesReceived=bytesReceived+len(data);
             i=i+1
-            if data == b'Fin' :
+            if data == b''.zfill(SIZE) :
                 print('Fin de archivo',data)
 
                 elapsed_time = time.time() - start_time
