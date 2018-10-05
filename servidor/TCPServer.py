@@ -87,6 +87,7 @@ class transfer :
             l.info('%s;%s', 'PACKETS SENT', i)
             l.info('%s;%s', 'PACKETS RECEIVED', i)
             l.info('%s;%s', 'ELAPSED_TIME', elapsed_time)
+            l.info('-----------------------------------')
 
 
 
