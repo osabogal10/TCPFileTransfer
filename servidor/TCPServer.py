@@ -45,7 +45,7 @@ class transfer :
 
         l = getLogger()
         os.makedirs(os.path.dirname('./logs/TCP{}.log'.format(id_cliente)), exist_ok=True)
-        logging.basicConfig(format='%(message)s', filename='./logs/TCP{}.log'.format(id_cliente), level=logging.DEBUG)
+        logging.basicConfig(format=' %(threadName)s;%(message)s', filename='./logs/TCP{}.log'.format(id_cliente), level=logging.DEBUG)
         sh = StreamHandler(stderr)
         sh.setLevel(DEBUG)
         f = Formatter(' %(message)s')
