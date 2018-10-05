@@ -1,5 +1,13 @@
-import socket, threading, os, hashlib, sys
+
+import socket, sys, threading, hashlib,time, logging,os
+from time import gmtime, strftime
+
+from sys import stderr
+from logging import getLogger, StreamHandler, Formatter, DEBUG
 from time import sleep
+from time import sleep
+
+
 
 
 host, port = '', 9000
@@ -34,28 +42,31 @@ class transfer :
             thread.start()
 
     def send_file(self, file_name, size, conn, addr, id_cliente):
+
+        l = getLogger()
+        os.makedirs(os.path.dirname('./logs/TCP{}.log'.format(id_cliente)), exist_ok=True)
+        logging.basicConfig(format='%(message)s', filename='./logs/TCP{}.log'.format(id_cliente), level=logging.DEBUG)
+        sh = StreamHandler(stderr)
+        sh.setLevel(DEBUG)
+        f = Formatter(' %(message)s')
+        sh.setFormatter(f)
+        l.addHandler(sh)
+        l.setLevel(DEBUG)
+
+        showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+        l.info('%s;%s', 'DATE', showtime)
+
+        l.info('%s;%s', 'FILE_NAME', file_name)
+        l.info('%s;%s', 'FILE_SIZE', size)
+        l.info('%s;%s', 'CLIENT', id_cliente)
         size = os.path.getsize(file_name)
-        conn.send(file_name.encode('utf-8'))
-        print(file_name.encode('utf-8'))
-        #sleep(0.5)
-        conn.send(str(size).encode('utf-8'))
-        print(str(size).encode('utf-8'))
-        #sleep(0.5)
-        conn.send(str(id_cliente).encode('utf-8'))
-        print(str(id_cliente).encode('utf-8'))
         i = 0
         bytesSent = 0
         print(' file size : {}'.format(str(size)))
-        with open(file_name, 'rb') as f:
-            buf = f.read()
-            hasher.update(buf)
-            hash_servidor = hasher.hexdigest()
-            conn.send(str(hash_servidor).encode('utf-8').zfill(SIZE))
-            print(str(hash_servidor).encode('utf-8').zfill(SIZE))
-            f.close()
 
         with open(file_name, 'rb') as file:
             data = file.read(SIZE)
+            start_time = time.time()
             conn.send(data)
             while data != bytes(''.encode()):
                 #print(data)
@@ -67,15 +78,15 @@ class transfer :
                     sent = conn.send(b'Fin')
                     print('Fin')
                     break
-            conn.send(str(bytesSent).encode('utf-8').zfill(32))
-            print(str(bytesSent).encode('utf-8'))
-            #sleep(0.5)
-            conn.send(str(i).encode('utf-8').zfill(32))
-            print(str(i).encode('utf-8'))
-            #sleep(0.5)
 
-            #sleep(0.5)
+            elapsed_time = time.time() - start_time
             print(' File sent successfully.')
+            l.info('FILE_DELIVERY;SUCCESS')
+            l.info('%s;%s', 'BYTES_SENT', bytesSent)
+            l.info('%s;%s', 'BYTES_RECEIVED', bytesSent)
+            l.info('%s;%s', 'PACKETS SENT', i)
+            l.info('%s;%s', 'PACKETS RECEIVED', i)
+            l.info('%s;%s', 'ELAPSED_TIME', elapsed_time)
 
 
 

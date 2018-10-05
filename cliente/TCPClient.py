@@ -5,26 +5,11 @@ from sys import stderr
 from logging import getLogger, StreamHandler, Formatter, DEBUG
 from time import sleep
 
-#configuracion del logger
-l = getLogger()
-os.makedirs(os.path.dirname('./logs/TCP.log'), exist_ok=True)
-logging.basicConfig(format='%(message)s', filename='./logs/TCP.log',  level=logging.DEBUG)
-sh = StreamHandler(stderr)
-sh.setLevel(DEBUG)
-f = Formatter(' %(message)s')
-sh.setFormatter(f)
-l.addHandler(sh)
-l.setLevel(DEBUG)
-
 
 host, port = '172.24.101.228', 9000
 #host, port = '127.0.0.1', 9000
 hasher = hashlib.md5()
 SIZE=2048
-
-showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-l.info('%s;%s','DATE',showtime)
-
 
 class recv_data :
     mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -32,63 +17,31 @@ class recv_data :
     mysocket.connect((host, port))
     def __init__(self):
         print('Connected successfully')
-
-        filename = self.mysocket.recv(SIZE)
-        filesize = self.mysocket.recv(SIZE)
-        idCliente = self.mysocket.recv(SIZE)
-        hashito = bytearray(SIZE)
-        hash_servidor = self.mysocket.recv_into(hashito,SIZE)
-        print(hashito.decode('utf-8'))
-        #hash_servidor = self.mysocket.recv(SIZE).decode('utf-8')
         start_time = time.time()
         data = self.mysocket.recv(SIZE)
-
         #hash_servidor = hash_servidor
-        print('hash servidor: ', str(hashito))
         i=0
         bytesReceived=0
-        f = open(filename.decode('utf-8'), 'wb+')
-        while data != bytes(''.encode()):
-            #print(data)
-            f.write(data)
-            data = self.mysocket.recv(SIZE)
-            bytesReceived=bytesReceived+len(data);
-            i=i+1
-            if data == b'Fin' :
-                print('Fin de archivo')
-                break
-        elapsed_time = time.time() - start_time
-        sleep(2)
-        buf = f.read()
-        hasher.update(buf)
-        hash_cliente = hasher.hexdigest()
-        print('hash cliente: ', hash_cliente)
 
-        l.info('%s;%s', 'FILE_NAME', filename.decode('utf-8'))
-        l.info('%s;%s', 'FILE_SIZE', filesize.decode('utf-8'))
-        l.info('%s;%s', 'CLIENT', idCliente.decode('utf-8'))
+        with open(sys.argv[1], 'wb+') as f:
+            while data != bytes(''.encode()):
+                #print(data)
+                f.write(data)
+                data = self.mysocket.recv(SIZE)
+                bytesReceived=bytesReceived+len(data);
+                i=i+1
+                if data == b'Fin' :
+                    print('Fin de archivo')
+                    break
+            elapsed_time = time.time() - start_time
 
-        bytesSent = self.mysocket.recv(32)
-        numPack = self.mysocket.recv(32)
-
-        l.info('FILE_DELIVERY;SUCCESS')
-        print('exito')
+            buf = f.read()
+            hasher.update(buf)
+            hash_cliente = hasher.hexdigest()
+            print('hash cliente: ', hash_cliente)
 
 
-        l.info('%s;%s', 'BYTES_SENT', bytesSent.decode('utf-8').lstrip('0'))
-        l.info('%s;%s', 'BYTES_RECEIVED', str(bytesReceived-3))
-
-
-        #showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-        print('TIME ELAPSED: ', elapsed_time)
-        l.info('%s;%s', 'PACKETS SENT', numPack.decode('utf-8').lstrip('0'))
-        l.info('%s;%s', 'PACKETS RECEIVED', i)
-
-        l.info('%s;%s', 'ELAPSED_TIME', elapsed_time)
-        l.info('------------------------------')
-        logging.shutdown()
-        os.rename('./logs/TCP.log', './logs/TCP{}.log'.format(idCliente.decode('utf-8')))
-
+            print('exito')
 
 
 
