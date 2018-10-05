@@ -50,7 +50,7 @@ class transfer :
             buf = f.read()
             hasher.update(buf)
             hash_servidor = hasher.hexdigest()
-            conn.send(str(hash_servidor).encode('utf-8'))
+            conn.send(str(hash_servidor).encode('utf-8').zfill(SIZE))
             print(str(hash_servidor).encode('utf-8').zfill(SIZE))
             f.close()
 
