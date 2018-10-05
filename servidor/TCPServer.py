@@ -51,7 +51,7 @@ class transfer :
             hasher.update(buf)
             hash_servidor = hasher.hexdigest()
             conn.send(str(hash_servidor).encode('utf-8'))
-            print(str(hash_servidor).encode('utf-8'))
+            print(str(hash_servidor).encode('utf-8').zfill(SIZE))
             f.close()
 
         with open(file_name, 'rb') as file:
